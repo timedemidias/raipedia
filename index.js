@@ -4,10 +4,10 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 
-const db = require("./services/firebaseAdmin");
-const verificarLogin = require("./middlewares/auth");
+const db = require("./config/firebaseAdmin");
+const authRoutes = require("./routes/admin/authRoutes");
 
-const authRoutes = require("./routes/admin/auth");
+const adminAuth = require("./middleware/adminAuth");
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 
-// MIDDLEWARES
+// MIDDLEWARE
 
 // Permite receber dados de formulários
 app.use(express.urlencoded({ extended: true }));
@@ -69,10 +69,9 @@ app.get("/teste", async (req, res) => {
 
 // PAINEL ADMINISTRATIVO
 
-app.get("/admin", verificarLogin, (req, res) => {
+app.get("/admin", adminAuth, (req, res) => {
     res.render("admin/index");
 });
-
 
 // INICIAR SERVIDOR
 

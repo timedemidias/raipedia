@@ -1,4 +1,5 @@
-function verificarLogin(req, res, next) {
+function adminAuth(req, res, next) {
+
     if (req.session.usuario) {
         return next();
     }
@@ -6,4 +7,5 @@ function verificarLogin(req, res, next) {
     res.redirect("/login");
 }
 
-module.exports = verificarLogin;
+module.exports = adminAuth;
+
